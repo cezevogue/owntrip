@@ -1,0 +1,15 @@
+{% extends 'backoffice.html.twig' %}
+
+
+
+{% block body %}
+
+  <h2>Choisissez le type de média que vous souhaitez ajouter</h2>
+    {% for type in media_types %}
+        <a href="" class="btn btn-lg btn-info p-5 m-5">{{ type.name }}</a>
+    {% endfor %}
+
+
+
+
+{% endblock %}
