@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\City;
+use App\Form\CityType;
+use App\Repository\CityRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+#[Route('/city')]
+class CityController extends AbstractController
+{
+    #[Route('/', name: 'city_create')]
+    #[Route('/update/{id}', name: 'city_update')]
+    public function index(Request $request, EntityManagerInterface $manager, CityRepository $repository, $id = null): Response
+    {
+
+        $cities = $repository->findAll();
+
+        if ($id) {
+            $city = $repository->find($id);
+
+        } else {
+
+
+            $city = new City();
+        }
+
+
+        $form = $this->createForm(CityType::class, $city);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($city);
+            $manager->flush();
+
+            if ($id) {
+                $this->addFlash('success', 'Ville modifiée');
+
+            } else {
+
+                $this->addFlash('success', 'Ville ajoutée');
+            }
+
+
+            return $this->redirectToRoute('city_create');
+
+
+        }
+
+
+        return $this->render('city/index.html.twig', [
+            'form' => $form->createView(),
+            'cities' => $cities
+        ]);
+
+    }
+
+
+    #[Route('/delete/{id}', name: 'city_delete')]
+    public function deleteCity(City $city, EntityManagerInterface $manager ): Response
+    {
+
+        $manager->remove($city);
+
+        $manager->flush();
+        $this->addFlash('success', 'Ville supprimée');
+
+        return $this->redirectToRoute('city_create');
+    }
+
+
+}
