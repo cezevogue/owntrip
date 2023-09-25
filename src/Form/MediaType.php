@@ -13,19 +13,46 @@ class MediaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('name', TextType::class, [
-                'required'=>false,
-                'label'=>'Liens de la vidéo youTube',
-                'attr'=>[
+        if ($options['lien']==true){
 
-                    'placeholder'=>'Collez lez liens de la vidéo YouTube souhaitée'
-                ]
 
-            ])
-            ->add('Valider', SubmitType::class)
+            $builder
+                ->add('name', TextType::class, [
+                    'required'=>false,
+                    'label'=>'Liens de la vidéo youTube',
+                    'attr'=>[
 
-        ;
+                        'placeholder'=>'Collez lez liens de la vidéo YouTube souhaitée'
+                    ]
+
+                ])
+                ->add('Valider', SubmitType::class)
+
+            ;
+
+
+        }else{
+
+            $builder
+                ->add('name', TextType::class, [
+                    'required'=>false,
+                    'label'=>'Liens de la vidéo youTube',
+                    'attr'=>[
+
+                        'placeholder'=>'Collez lez liens de la vidéo YouTube souhaitée'
+                    ]
+
+                ])
+                ->add('Valider', SubmitType::class)
+
+            ;
+
+
+
+
+        }
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

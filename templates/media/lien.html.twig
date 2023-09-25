@@ -1,0 +1,12 @@
+{% extends 'backoffice.html.twig' %}
+
+
+
+{% block body %}
+
+    {% for media in medias %}
+
+    <iframe width="560" height="315" src="{{ media.name }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+{% endfor %}
+
+{% endblock %}

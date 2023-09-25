@@ -17,7 +17,7 @@ class Media
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'medias')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Activity $activity = null;
 
     #[ORM\ManyToOne(inversedBy: 'media')]
