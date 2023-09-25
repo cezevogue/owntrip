@@ -4,9 +4,25 @@
 
 {% block body %}
 
-    {% for media in medias %}
 
-    <iframe width="560" height="315" src="{{ media.name }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-{% endfor %}
-
+    <form action="{{ path('delete_media') }}" method="post" class="row">
+        {% for media in medias %}
+            <div  class="col-4 my-2">
+                <div class="row">
+                <iframe class="col-12"  src="{{ media.name }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <div  style="position: relative;top:-110px;right: -170px" class="form-check">
+                    <input class="form-check-input" name="choice[]" multiple type="checkbox" value="{{ media.id }}" id="flexCheckDefault">
+                </div>
+                </div>
+            </div>
+        {% endfor %}
+        <button class="btn btn-primary" type="submit">Supprimer</button>
+    </form>
 {% endblock %}
+
+
+
+
+
+
+

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Media;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,13 +35,13 @@ class MediaType extends AbstractType
         }else{
 
             $builder
-                ->add('name', TextType::class, [
+                ->add('name', FileType::class, [
                     'required'=>false,
-                    'label'=>'Liens de la vidéo youTube',
+                    'label'=>'Fichier Photo/Vidéo à uploader',
                     'attr'=>[
-
-                        'placeholder'=>'Collez lez liens de la vidéo YouTube souhaitée'
+                        'onChange'=>'loadFile(event)'
                     ]
+
 
                 ])
                 ->add('Valider', SubmitType::class)
@@ -59,6 +60,8 @@ class MediaType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Media::class,
+            'lien'=>false,
+            'fichier'=>false
         ]);
     }
 }
