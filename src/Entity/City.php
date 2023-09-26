@@ -25,6 +25,7 @@ class City
     #[ORM\JoinColumn(nullable: false)]
     private ?Country $country = null;
 
+
     #[ORM\OneToMany(mappedBy: 'city', targetEntity: Media::class)]
     private Collection $media;
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Form\CityType;
 use App\Repository\CityRepository;
+use App\Repository\MediaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,8 +64,15 @@ class CityController extends AbstractController
 
 
     #[Route('/delete/{id}', name: 'city_delete')]
-    public function deleteCity(City $city, EntityManagerInterface $manager ): Response
+    public function deleteCity(CityRepository $cityRepository,MediaRepository $mediaRepository, EntityManagerInterface $manager,$id ): Response
     {
+        $city=$cityRepository->find($id);
+
+        $media=$mediaRepository->findOneBy(['city'=>$city]);
+
+
+       unlink($this->getParameter('upload_dir').'/'.$media->getName());
+
 
         $manager->remove($city);
 

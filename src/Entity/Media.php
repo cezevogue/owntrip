@@ -20,6 +20,7 @@ class Media
     #[ORM\JoinColumn(nullable: true)]
     private ?Activity $activity = null;
 
+    #[ORM\JoinColumn(name: 'city', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\ManyToOne(inversedBy: 'media')]
     private ?City $city = null;
 
