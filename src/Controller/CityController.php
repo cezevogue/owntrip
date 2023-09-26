@@ -48,7 +48,7 @@ class CityController extends AbstractController
             }
 
 
-            return $this->redirectToRoute('city_create');
+            return $this->redirectToRoute('media_type_choice', ['param'=>'ville', 'id'=>$city->getId()]);
 
 
         }
