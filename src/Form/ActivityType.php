@@ -81,7 +81,10 @@ class ActivityType extends AbstractType
                 'label'=>'Catégorie',
                 'choice_label'=>'name',
                 'multiple'=>true,
-                'placeholder'=>'Saisissez les catégories en liens avec l\'activité'
+                'placeholder'=>'Saisissez les catégories en liens avec l\'activité',
+                'attr'=>[
+                    'class'=>'select2'
+                ]
 
             ])
             ->add('type', EntityType::class, [

@@ -18,7 +18,7 @@ class Package
     #[ORM\Column]
     private ?int $activity_count = null;
 
-    #[ORM\ManyToMany(targetEntity: ACtivity::class, inversedBy: 'packages')]
+    #[ORM\ManyToMany(targetEntity: Activity::class, inversedBy: 'packages')]
     private Collection $activities;
 
     public function __construct()
@@ -44,14 +44,14 @@ class Package
     }
 
     /**
-     * @return Collection<int, ACtivity>
+     * @return Collection<int, Activity>
      */
     public function getActivities(): Collection
     {
         return $this->activities;
     }
 
-    public function addActivity(ACtivity $activity): static
+    public function addActivity(Activity $activity): static
     {
         if (!$this->activities->contains($activity)) {
             $this->activities->add($activity);
@@ -60,7 +60,7 @@ class Package
         return $this;
     }
 
-    public function removeActivity(ACtivity $activity): static
+    public function removeActivity(Activity $activity): static
     {
         $this->activities->removeElement($activity);
 

@@ -180,14 +180,22 @@ class MediaController extends AbstractController
         $medias_id = $request->request->all()['choice'];
 
         foreach ($medias_id as $id) {
+
             $media = $repository->find($id);
+
+            if ($media->getType()->getName()!='Lien'){
+
+                unlink($this->getParameter('upload_dir').'/'.$media->getName());
+            }
+
+
             $manager->remove($media);
 
         }
         $manager->flush();
 
 
-        return $this->redirectToRoute('list_choice');
+        return $this->redirectToRoute('activity_list');
     }
 
 

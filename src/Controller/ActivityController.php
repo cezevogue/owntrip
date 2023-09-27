@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Activity;
 use App\Entity\Media;
+use App\Entity\Package;
 use App\Form\ActivityType;
 use App\Form\MediaType;
+use App\Form\PackageType;
 use App\Repository\ActivityRepository;
 use App\Repository\MediaRepository;
+use App\Repository\PackageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -130,6 +133,45 @@ class ActivityController extends AbstractController
             'activity'=>$activity
         ]);
     }
+
+
+      #[Route('/package', name: 'package')]
+          public function package(Request $request, EntityManagerInterface $manager, PackageRepository $repository): Response
+          {
+              $packages=$repository->findAll();
+
+              $package=new Package();
+             dump($request->request->all());
+
+             if ($request->request->has('search')){
+
+                 $form = $this->createForm(PackageType::class, $package, ['search'=>$request->request->get('search')]);
+
+             }else
+             {
+                 $form = $this->createForm(PackageType::class, $package);
+
+             }
+
+
+              $form->handleRequest($request);
+
+              if ($form->isSubmitted() && $form->isValid()) {
+
+                  $manager->persist($package);
+                  $manager->flush();
+
+                  return $this->redirectToRoute('app_admin');
+
+              }
+
+
+
+              return $this->render('activity/package.html.twig', [
+                 'form'=>$form->createView(),
+                  'packages'=>$packages
+              ]);
+          }
 
 
 }
