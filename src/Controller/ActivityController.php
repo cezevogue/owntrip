@@ -62,7 +62,6 @@ class ActivityController extends AbstractController
     {
 
 
-
         $form = $this->createForm(ActivityType::class, $activity);
 
         $form->handleRequest($request);
@@ -77,22 +76,21 @@ class ActivityController extends AbstractController
         }
 
 
-
         return $this->render('activity/activity_update_infos.html.twig', [
-           'form'=>$form->createView()
+            'form' => $form->createView()
         ]);
     }
 
     #[Route('/update/medias/{id}', name: 'activity_update_medias')]
-    public function update_medias(ActivityRepository $activityRepository, MediaRepository $mediaRepository, EntityManagerInterface $manager,Request $request , $id): Response
+    public function update_medias(ActivityRepository $activityRepository, MediaRepository $mediaRepository, EntityManagerInterface $manager, Request $request, $id): Response
     {
 
-        $activity=$activityRepository->find($id);
-        $medias=$mediaRepository->findBy(['activity'=>$activity]);
+        $activity = $activityRepository->find($id);
+        $medias = $mediaRepository->findBy(['activity' => $activity]);
 
         return $this->render('activity/activity_update_medias.html.twig', [
-           'medias'=>$medias,
-            'id'=>$id
+            'medias' => $medias,
+            'id' => $id
         ]);
     }
 
@@ -100,25 +98,22 @@ class ActivityController extends AbstractController
     #[Route('/delete/{id}', name: 'activity_delete')]
     public function delete(ActivityRepository $activityRepository, MediaRepository $mediaRepository, EntityManagerInterface $manager, $id): Response
     {
-          $activity=$activityRepository->find($id);
-          $medias=$mediaRepository->findBy(['activity'=>$activity]);
+        $activity = $activityRepository->find($id);
+        $medias = $mediaRepository->findBy(['activity' => $activity]);
 
-          foreach ($medias as $media)
-          {
+        foreach ($medias as $media) {
 
-              if ($media->getType()->getName()!='Lien')
-              {
-                  unlink($this->getParameter('upload_dir').'/'.$media->getName());
+            if ($media->getType()->getName() != 'Lien') {
+                unlink($this->getParameter('upload_dir') . '/' . $media->getName());
 
-              }
+            }
 
-              $activity->removeMedia($media);
+            $activity->removeMedia($media);
 
 
-          }
-          $manager->remove($activity);
-          $manager->flush();
-
+        }
+        $manager->remove($activity);
+        $manager->flush();
 
 
         return $this->redirectToRoute('activity_list');
@@ -130,48 +125,65 @@ class ActivityController extends AbstractController
 
 
         return $this->render('activity/activity_details.html.twig', [
-            'activity'=>$activity
+            'activity' => $activity
         ]);
     }
 
 
-      #[Route('/package', name: 'package')]
-          public function package(Request $request, EntityManagerInterface $manager, PackageRepository $repository): Response
-          {
-              $packages=$repository->findAll();
+    #[Route('/package', name: 'package')]
+    public function package(Request $request, EntityManagerInterface $manager, PackageRepository $repository): Response
+    {
+        $packages = $repository->findAll();
 
-              $package=new Package();
-             dump($request->request->all());
+        $package = new Package();
+        dump($request->request->all());
 
-             if ($request->request->has('search')){
+        if ($request->request->has('search')) {
 
-                 $form = $this->createForm(PackageType::class, $package, ['search'=>$request->request->get('search')]);
+            $form = $this->createForm(PackageType::class, $package, ['search' => $request->request->get('search')]);
 
-             }else
-             {
-                 $form = $this->createForm(PackageType::class, $package);
+        } else {
+            $form = $this->createForm(PackageType::class, $package);
 
-             }
-
-
-              $form->handleRequest($request);
-
-              if ($form->isSubmitted() && $form->isValid()) {
-
-                  $manager->persist($package);
-                  $manager->flush();
-
-                  return $this->redirectToRoute('app_admin');
-
-              }
+        }
 
 
+        $form->handleRequest($request);
 
-              return $this->render('activity/package.html.twig', [
-                 'form'=>$form->createView(),
-                  'packages'=>$packages
-              ]);
-          }
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $manager->persist($package);
+            $manager->flush();
+
+            return $this->redirectToRoute('package');
+
+        }
+
+
+        return $this->render('activity/package.html.twig', [
+            'form' => $form->createView(),
+            'packages' => $packages
+        ]);
+    }
+
+    #[Route('/package/detail/{id}', name: 'package_detail')]
+    public function package_detail(Package $package): Response
+    {
+
+
+        return $this->render('activity/package_detail.html.twig', [
+            'package' => $package
+        ]);
+    }
+
+    #[Route('/package/delete/{id}', name: 'package_delete')]
+    public function package_delete(Package $package, EntityManagerInterface $manager): Response
+    {
+       $manager->remove($package);
+       $manager->flush();
+
+        return $this->redirectToRoute('package');
+    }
 
 
 }

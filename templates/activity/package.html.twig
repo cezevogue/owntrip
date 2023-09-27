@@ -32,8 +32,8 @@
                 <td>{{ package.activityCount }}</td>
                 <td>{{ package.activities[0].city.name }}</td>
                 <td>
-{#                    <a href="{{ path('package_update', {'id': package.id}) }}" class="btn btn-info">Modifier</a>#}
-{#                    <a onclick="return confirm('Etes-vous sûr?')" href="{{ path('package_delete', {'id': package.id}) }}" class="btn btn-danger">Supprimer</a>#}
+                    <a href="{{ path('package_detail', {'id': package.id}) }}" class="btn btn-info">Voir les activités</a>
+                    <a onclick="return confirm('Etes-vous sûr?')" href="{{ path('package_delete', {'id': package.id}) }}" class="btn btn-danger">Supprimer</a>
 
                 </td>
             </tr>
