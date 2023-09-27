@@ -35,7 +35,8 @@ class MediaController extends AbstractController
         return $this->render('media/index.html.twig', [
             'media_types' => $media_types,
             'identity'=>$id,
-            'param'=>$param
+            'param'=>$param,
+            'title'=>'Choix du type de média'
         ]);
     }
 
@@ -81,7 +82,7 @@ class MediaController extends AbstractController
 
             $manager->persist($media);
             $manager->flush();
-
+            $this->addFlash('info', 'Opération réalisée avec succès');
             if ($param=='activity'){
                 $activity=$activityRepository->find($identity);
                 $activity->addMedia($media);
@@ -118,7 +119,8 @@ class MediaController extends AbstractController
 
         return $this->render('media/create.html.twig', [
             'form' => $form->createView(),
-            'type' => $type
+            'type' => $type,
+            'title'=>'Ajout de média'
         ]);
     }
 
@@ -131,7 +133,8 @@ class MediaController extends AbstractController
 
 
         return $this->render('media/video.html.twig', [
-            'medias' => $medias
+            'medias' => $medias,
+            'title'=>'Gestion vidéos'
         ]);
     }
 
@@ -143,7 +146,8 @@ class MediaController extends AbstractController
         $medias = $repository->findBy(['type' => $media_type]);
 
         return $this->render('media/photo.html.twig', [
-            'medias' => $medias
+            'medias' => $medias,
+            'title'=>'Gestion photos'
         ]);
     }
 
@@ -156,7 +160,8 @@ class MediaController extends AbstractController
 
 
         return $this->render('media/lien.html.twig', [
-            'medias' => $medias
+            'medias' => $medias,
+            'title'=>'Gestion liens YouTube'
         ]);
     }
 
@@ -167,7 +172,8 @@ class MediaController extends AbstractController
         $types = $mediaTypeRepository->findAll();
 
         return $this->render('media/list_choice.html.twig', [
-            'types' => $types
+            'types' => $types,
+            'title'=>'Choix du type de média'
         ]);
     }
 
@@ -193,7 +199,7 @@ class MediaController extends AbstractController
 
         }
         $manager->flush();
-
+        $this->addFlash('info', 'Opération réalisée avec succès');
 
         return $this->redirectToRoute('activity_list');
     }

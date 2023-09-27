@@ -6,6 +6,7 @@ use App\Repository\ActivityCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ActivityCategoryRepository::class)]
 class ActivityCategory
@@ -15,9 +16,11 @@ class ActivityCategory
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\ManyToMany(targetEntity: Activity::class, mappedBy: 'category')]
     private Collection $activities;
 

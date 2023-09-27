@@ -6,6 +6,7 @@ use App\Repository\ActivityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ActivityRepository::class)]
 class Activity
@@ -15,44 +16,57 @@ class Activity
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
+
 
     #[ORM\Column]
     private ?int $first_price = null;
 
+
     #[ORM\Column]
     private ?int $max_price = null;
+
 
     #[ORM\Column(length: 255)]
     private ?string $tel = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\Column(length: 255)]
     private ?string $street_number = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\Column(length: 255)]
     private ?string $street_name = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\Column]
     private ?int $zip_code = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\ManyToMany(targetEntity: ActivityCategory::class, inversedBy: 'activities')]
     private Collection $category;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\ManyToOne(inversedBy: 'activities')]
     #[ORM\JoinColumn(nullable: false)]
     private ?ActivityType $type = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\OneToMany(mappedBy: 'activity', targetEntity: Media::class)]
     private Collection $medias;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\ManyToOne(inversedBy: 'activities')]
     #[ORM\JoinColumn(nullable: false)]
     private ?City $city = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\ManyToMany(targetEntity: Package::class, mappedBy: 'activities')]
     private Collection $packages;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\Column(nullable: true)]
     private ?int $duration = null;
 

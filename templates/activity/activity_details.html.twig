@@ -1,5 +1,14 @@
 {% extends 'backoffice.html.twig' %}
 
+{% block titre %}
+    {{ title }}
+{% endblock %}
+{% block title %}
+   {{ parent() }} {{ title }}
+{% endblock %}
+
+
+
 {% block body %}
 
     <div class="row">
@@ -54,9 +63,5 @@
 
 
     </div>
-{% endblock %}
-
-{% block title %}
-
 {% endblock %}
 

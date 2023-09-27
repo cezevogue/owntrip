@@ -34,13 +34,14 @@ class ActivityCategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($category);
             $manager->flush();
-
+            $this->addFlash('info', 'Opération réalisée avec succès');
             return $this->redirectToRoute('category_create');
         }
 
         return $this->render('activity_category/index.html.twig', [
             'form' => $form->createView(),
             'categories' => $categories,
+            'title'=>'Gestion des catégories d\'activité'
         ]);
     }
 
@@ -49,6 +50,7 @@ class ActivityCategoryController extends AbstractController
     {
         $manager->remove($category);
         $manager->flush();
+        $this->addFlash('info', 'Opération réalisée avec succès');
 
         return $this->redirectToRoute('category_create');
     }

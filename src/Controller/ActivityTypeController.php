@@ -41,7 +41,7 @@ class ActivityTypeController extends AbstractController
 
             $manager->persist($type);
             $manager->flush();
-
+            $this->addFlash('info', 'Opération réalisée avec succès');
             return $this->redirectToRoute('type_create');
 
 
@@ -52,7 +52,8 @@ class ActivityTypeController extends AbstractController
 
         return $this->render('activity_type/index.html.twig', [
             'formulaire_type'=>$formulaire_type->createView(),
-            'types'=>$types
+            'types'=>$types,
+             'title'=>'Gestion des types d\'activité'
         ]);
 
     }
@@ -62,7 +63,7 @@ class ActivityTypeController extends AbstractController
     {
         $manager->remove($type);
         $manager->flush();
-
+        $this->addFlash('info', 'Opération réalisée avec succès');
 
         return $this->redirectToRoute('type_create');
     }

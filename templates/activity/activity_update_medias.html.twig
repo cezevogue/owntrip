@@ -1,5 +1,14 @@
 {% extends 'backoffice.html.twig' %}
 
+{% block titre %}
+    {{ title }}
+{% endblock %}
+{% block title %}
+    {{ parent() }} {{ title }}
+{% endblock %}
+
+
+
 {% block body %}
 
 
@@ -69,10 +78,6 @@
 
        <button type="submit" class="btn btn-info">Supprimer les médias</button>
     </form>
-
-{% endblock %}
-
-{% block title %}
 
 {% endblock %}
 

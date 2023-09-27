@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SubscriptionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SubscriptionRepository::class)]
 class Subscription
@@ -14,12 +15,15 @@ class Subscription
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\Column(length: 255)]
     private ?string $number = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\ManyToOne(inversedBy: 'subscriptions')]
     private ?User $user = null;
 

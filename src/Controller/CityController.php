@@ -57,7 +57,8 @@ class CityController extends AbstractController
 
         return $this->render('city/index.html.twig', [
             'form' => $form->createView(),
-            'cities' => $cities
+            'cities' => $cities,
+            'title'=>'Gestion des villes'
         ]);
 
     }

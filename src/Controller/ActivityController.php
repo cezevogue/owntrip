@@ -33,14 +33,15 @@ class ActivityController extends AbstractController
 
             $manager->persist($activity);
             $manager->flush();
-
+            $this->addFlash('info','Opération réalisée avec succès' );
             return $this->redirectToRoute('media_type_choice', ['param' => 'activity', 'id' => $activity->getId()]);
 
         }
 
 
         return $this->render('activity/index.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'title'=>'Création d\'activité'
         ]);
     }
 
@@ -53,7 +54,8 @@ class ActivityController extends AbstractController
 
 
         return $this->render('activity/activity_list.html.twig', [
-            'activities' => $activities
+            'activities' => $activities,
+            'title'=>'Liste des activités'
         ]);
     }
 
@@ -70,14 +72,15 @@ class ActivityController extends AbstractController
 
             $manager->persist($activity);
             $manager->flush();
-
+            $this->addFlash('info','Opération réalisée avec succès' );
             return $this->redirectToRoute('activity_list');
 
         }
 
 
         return $this->render('activity/activity_update_infos.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'title'=>'Modification informations de l\'activité '
         ]);
     }
 
@@ -90,7 +93,8 @@ class ActivityController extends AbstractController
 
         return $this->render('activity/activity_update_medias.html.twig', [
             'medias' => $medias,
-            'id' => $id
+            'id' => $id,
+            'title'=>'Modification médias de l\'activité '
         ]);
     }
 
@@ -114,7 +118,7 @@ class ActivityController extends AbstractController
         }
         $manager->remove($activity);
         $manager->flush();
-
+        $this->addFlash('info','Opération réalisée avec succès' );
 
         return $this->redirectToRoute('activity_list');
     }
@@ -125,7 +129,8 @@ class ActivityController extends AbstractController
 
 
         return $this->render('activity/activity_details.html.twig', [
-            'activity' => $activity
+            'activity' => $activity,
+            'title'=>'Détail activité'
         ]);
     }
 
@@ -154,7 +159,7 @@ class ActivityController extends AbstractController
 
             $manager->persist($package);
             $manager->flush();
-
+            $this->addFlash('info','Opération réalisée avec succès' );
             return $this->redirectToRoute('package');
 
         }
@@ -162,7 +167,8 @@ class ActivityController extends AbstractController
 
         return $this->render('activity/package.html.twig', [
             'form' => $form->createView(),
-            'packages' => $packages
+            'packages' => $packages,
+            'title'=>'Gestion circuits'
         ]);
     }
 
@@ -172,7 +178,8 @@ class ActivityController extends AbstractController
 
 
         return $this->render('activity/package_detail.html.twig', [
-            'package' => $package
+            'package' => $package,
+            'title'=>'Détail circuit'
         ]);
     }
 
@@ -181,6 +188,7 @@ class ActivityController extends AbstractController
     {
        $manager->remove($package);
        $manager->flush();
+       $this->addFlash('info','Opération réalisée avec succès' );
 
         return $this->redirectToRoute('package');
     }

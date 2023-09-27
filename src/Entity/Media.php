@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\MediaRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
 class Media
@@ -13,17 +14,21 @@ class Media
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\ManyToOne(inversedBy: 'medias')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Activity $activity = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\JoinColumn(name: 'city', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\ManyToOne(inversedBy: 'media')]
     private ?City $city = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\ManyToOne(inversedBy: 'media')]
     private ?MediaType $type = null;
 

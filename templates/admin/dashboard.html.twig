@@ -1,4 +1,14 @@
 {% extends 'backoffice.html.twig' %}
+
+{% block titre %}
+	{{ title }}
+{% endblock %}
+{% block title %}
+	{{ parent() }} {{ title }}
+{% endblock %}
+
+
+
 {% block body %}
-	<h1>toto</h1>
+
 {% endblock %}

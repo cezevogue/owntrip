@@ -1,6 +1,12 @@
 {% extends 'backoffice.html.twig' %}
 
-{% block title %}Hello ActivityController!{% endblock %}
+{% block titre %}
+  {{ title }}
+{% endblock %}
+{% block title %}
+  {{ parent() }} {{ title }}
+{% endblock %}
+
 
 {% block body %}
   {% block stylesheet %}

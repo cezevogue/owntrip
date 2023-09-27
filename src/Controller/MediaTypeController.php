@@ -40,7 +40,7 @@ class MediaTypeController extends AbstractController
 
             $manager->persist($mediatype);
             $manager->flush();
-
+            $this->addFlash('info', 'Opération réalisée avec succès');
             return $this->redirectToRoute('media_type_create');
 
         }
@@ -48,7 +48,8 @@ class MediaTypeController extends AbstractController
 
         return $this->render('media_type/index.html.twig', [
             'form'=>$form->createView(),
-            'mediastypes'=>$mediastypes
+            'mediastypes'=>$mediastypes,
+            'title'=>'Gestion types de média'
         ]);
     }
 
@@ -58,7 +59,7 @@ class MediaTypeController extends AbstractController
 
         $manager->remove($mediatype);
         $manager->flush();
-
+        $this->addFlash('info', 'Opération réalisée avec succès');
 
         return $this->redirectToRoute('media_type_create');
     }

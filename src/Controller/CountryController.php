@@ -43,7 +43,7 @@ class CountryController extends AbstractController
 
             $manager->persist($country);
             $manager->flush();
-
+            $this->addFlash('info', 'Opération réalisée avec succès');
             return $this->redirectToRoute('country_create');
 
 
@@ -54,7 +54,8 @@ class CountryController extends AbstractController
 
         return $this->render('country/index.html.twig', [
            'formu'=>$form->createView(),
-            'countries'=>$countries
+            'countries'=>$countries,
+            'title'=>'Gestion des pays'
         ]);
 
     }
@@ -64,7 +65,7 @@ class CountryController extends AbstractController
     {
         $manager->remove($country);
         $manager->flush();
-
+        $this->addFlash('info', 'Opération réalisée avec succès');
 
         return $this->redirectToRoute('country_create');
     }

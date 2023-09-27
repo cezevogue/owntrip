@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <title>{% block title %}  Owntrip Admin | {% endblock %}</title>
 
 
     {% block stylesheet %}
@@ -84,26 +85,26 @@
             </div>
         </li>
 
-{#        <!-- Divider -->#}
-{#        <hr#}
-{#                class="sidebar-divider">#}
+        {#        <!-- Divider --> #}
+        {#        <hr #}
+        {#                class="sidebar-divider"> #}
 
 
-{#        <li class="nav-item">#}
-{#            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilitiess"#}
-{#               aria-expanded="true" aria-controls="collapseUtilitiess">#}
-{#                <i class="fas fa-fw fa-wrench"></i>#}
-{#                <span>Gestion des médias </span>#}
-{#            </a>#}
-{#            <div id="collapseUtilitiess" class="collapse" aria-labelledby="headingUtilities"#}
-{#                 data-parent="#accordionSidebar">#}
-{#                <div class="bg-white py-2 collapse-inner rounded">#}
-{#                    <a class="dropdown-item" href="{{ path('media_type_choice') }}">Ajouter un média</a>#}
-{#                    <a class="dropdown-item" href="{{ path('list_choice') }}">Liste des médias </a>#}
-{#                    <a class="dropdown-item" href=""> </a>#}
-{#                </div>#}
-{#            </div>#}
-{#        </li>#}
+        {#        <li class="nav-item"> #}
+        {#            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilitiess" #}
+        {#               aria-expanded="true" aria-controls="collapseUtilitiess"> #}
+        {#                <i class="fas fa-fw fa-wrench"></i> #}
+        {#                <span>Gestion des médias </span> #}
+        {#            </a> #}
+        {#            <div id="collapseUtilitiess" class="collapse" aria-labelledby="headingUtilities" #}
+        {#                 data-parent="#accordionSidebar"> #}
+        {#                <div class="bg-white py-2 collapse-inner rounded"> #}
+        {#                    <a class="dropdown-item" href="{{ path('media_type_choice') }}">Ajouter un média</a> #}
+        {#                    <a class="dropdown-item" href="{{ path('list_choice') }}">Liste des médias </a> #}
+        {#                    <a class="dropdown-item" href=""> </a> #}
+        {#                </div> #}
+        {#            </div> #}
+        {#        </li> #}
 
         <!-- Divider -->
         <hr
@@ -111,7 +112,7 @@
 
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ path('category_create') }}" >
+            <a class="nav-link collapsed" href="{{ path('category_create') }}">
                 <i class="fas fa-fw fa-wrench"></i>
                 <span>Gestion Catégories</span>
             </a>
@@ -122,10 +123,8 @@
                 class="sidebar-divider">
 
 
-
-
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ path('type_create') }}" >
+            <a class="nav-link collapsed" href="{{ path('type_create') }}">
                 <i class="fas fa-fw fa-wrench"></i>
                 <span>Gestion types</span>
             </a>
@@ -136,10 +135,9 @@
                 class="sidebar-divider">
 
 
-
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item ">
-            <a class="nav-link" href="{{ path('country_create') }}" >
+            <a class="nav-link" href="{{ path('country_create') }}">
                 <i class="fas fa-fw fa-wrench"></i>
                 <span>Gestion Pays</span>
             </a>
@@ -151,10 +149,8 @@
                 class="sidebar-divider">
 
 
-
-
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ path('media_type_create') }}" >
+            <a class="nav-link collapsed" href="{{ path('media_type_create') }}">
                 <i class="fas fa-fw fa-wrench"></i>
                 <span>Gestion types médias</span>
             </a>
@@ -166,10 +162,8 @@
                 class="sidebar-divider">
 
 
-
-
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ path('city_create') }}" >
+            <a class="nav-link collapsed" href="{{ path('city_create') }}">
                 <i class="fas fa-fw fa-wrench"></i>
                 <span>Gestion villes</span>
             </a>
@@ -177,7 +171,7 @@
         <hr
                 class="sidebar-divider">
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ path('package') }}" >
+            <a class="nav-link collapsed" href="{{ path('package') }}">
                 <i class="fas fa-fw fa-wrench"></i>
                 <span>Gestion circuits</span>
             </a>
@@ -245,9 +239,16 @@
             <div
                     class="container-fluid">
 
+                <h1 class="text-center m-5">
+                    {% block titre %}
 
+                    {% endblock %}
+                </h1>
                 <!-- Page Heading -->
-                {% block body %}{% endblock %}
+                {% block body %}
+
+
+                {% endblock %}
 
             </div>
             <!-- /.container-fluid -->

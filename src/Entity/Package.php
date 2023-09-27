@@ -6,6 +6,7 @@ use App\Repository\PackageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PackageRepository::class)]
 class Package
@@ -15,9 +16,12 @@ class Package
     #[ORM\Column]
     private ?int $id = null;
 
+
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\Column]
     private ?int $activity_count = null;
 
+    #[Assert\NotBlank(message: 'Champs Obligatoire')]
     #[ORM\ManyToMany(targetEntity: Activity::class, inversedBy: 'packages')]
     private Collection $activities;
 
