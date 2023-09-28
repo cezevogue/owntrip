@@ -7,11 +7,25 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[UniqueEntity(fields: ['email'], message: 'Un compte exist déjà à cette adresse mail')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    // Pour l'authentification les interface  UserInterface et PasswordAuthenticatedUserInterface
+    // sont obligatoire.
+    // La première pour s'assurer que l'entité possède bien les méthode:
+    // eraseCredentials() => si implémenté avec contenu , elle permet de netoyer la bdd de tout les mots de passe non crypté
+    // getUserIdentifier() => elle permet de définir sur quel critère l'authentification doit avoir lieu (ici sur l'email)
+    // getPassword()
+    // getRoles()
+
+    // La seconde permet à symfony d'aller capter l'algorithme à utiliser pour le cryptage (défini dans le security.yaml)
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -46,6 +60,10 @@ class User
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
+
+    #[ORM\Column]
+    private array $roles=['ROLE_USER'];
+
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Subscription::class)]
     private Collection $subscriptions;
@@ -181,6 +199,26 @@ class User
     }
 
     /**
+     * @return array
+     */
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param array $roles
+     */
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
+    }
+
+
+
+
+
+    /**
      * @return Collection<int, Subscription>
      */
     public function getSubscriptions(): Collection
@@ -209,4 +247,20 @@ class User
 
         return $this;
     }
+
+
+
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUserIdentifier(): string
+    {
+       return (string) $this->email;
+    }
+
+
+
 }
