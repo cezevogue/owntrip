@@ -31,8 +31,8 @@
 
     <h1>Une destination, des envies, faites de votre voyage un rêve ...</h1>
 
-    <form class="d-flex w-50 mx-auto mt-5">
-        <input class="form-control me-sm-2" type="search" placeholder="Choisissez une destination">
+    <form method="post" action="{{ path('activities_result') }}" class="d-flex w-50 mx-auto mt-5">
+        <input class="form-control me-sm-2" name="city" type="search" placeholder="Choisissez une destination">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Go !</button>
     </form>
 {% endblock %}

@@ -18,17 +18,17 @@ class Media
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[Assert\NotBlank(message: 'Champs Obligatoire')]
+
     #[ORM\ManyToOne(inversedBy: 'medias')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Activity $activity = null;
 
-    #[Assert\NotBlank(message: 'Champs Obligatoire')]
+
     #[ORM\JoinColumn(name: 'city', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\ManyToOne(inversedBy: 'media')]
     private ?City $city = null;
 
-    #[Assert\NotBlank(message: 'Champs Obligatoire')]
+
     #[ORM\ManyToOne(inversedBy: 'media')]
     private ?MediaType $type = null;
 

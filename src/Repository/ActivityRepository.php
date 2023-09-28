@@ -21,20 +21,41 @@ class ActivityRepository extends ServiceEntityRepository
         parent::__construct($registry, Activity::class);
     }
 
-//    /**
-//     * @return Activity[] Returns an array of Activity objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Activity[] Returns an array of Activity objects
+     */
+    public function findByCity($city): array
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.city', 'c')
+            ->andWhere('c.name LIKE :city')
+            ->setParameter('city', "%$city%")
+            ->orderBy('a.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Activity[] Returns an array of Activity objects
+     */
+    public function findByCityAndType($city, $type): array
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.city', 'c')
+            ->join('a.type', 't')
+            ->andWhere('t.id = :type')
+            ->andWhere('c.name LIKE :city')
+            ->setParameter('city', "%$city%")
+            ->setParameter('type', $type)
+            ->orderBy('a.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+
 
 //    public function findOneBySomeField($value): ?Activity
 //    {
