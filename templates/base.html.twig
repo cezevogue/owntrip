@@ -51,6 +51,11 @@
             </div>
         </div>
     </nav>
+
+        {% block baniere %}
+
+        {% endblock %}
+
     </header>
     <main class="container ">
         <div class="w-50 mx-auto ">
@@ -63,6 +68,8 @@
                 {% endfor %}
             {% endfor %}
         </div>
+
+
         {% block body %}{% endblock %}
     </main>
     <footer class="p-2 bg-dark text-white fixed-bottom text-center">
