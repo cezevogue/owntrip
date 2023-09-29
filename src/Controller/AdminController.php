@@ -112,12 +112,28 @@ class AdminController extends AbstractController
     }
 
     #[Route('/password/new/{id}', name: 'new_password')]
-    public function new_password($id): Response
+    public function new_password(UserRepository $userRepository,Request $request,EntityManagerInterface $manager,UserPasswordHasherInterface $hasher,$id): Response
     {
+
+        // en théorie un champs token devrait exister en BDD, token qui aurait été généré à la demande de réinitialisation ainsi q'une date d'expiration
+        // puis la recherche de user aurait été findOneBy(['token'=>$token]);
+        if (!empty($_POST))
+        {
+
+            $user=$userRepository->find($id);
+            $mdp=$hasher->hashPassword($user, $request->request->get('password'));
+            $user->setPassword($mdp);
+            // ici le token aurait été remis à null
+            $manager->persist($user);
+            $manager->flush();
+            $this->addFlash('info', 'Mot de passe réinitialisé, connectez-vous à présent');
+            return $this->redirectToRoute('login');
+
+        }
 
 
         return $this->render('admin/new_password.html.twig', [
-
+             'id'=>$id
         ]);
     }
 
