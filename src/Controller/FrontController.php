@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Activity;
 use App\Repository\ActivityRepository;
 use App\Repository\ActivityTypeRepository;
 use App\Service\CartService;
@@ -67,7 +68,7 @@ class FrontController extends AbstractController
     public function add_wish(CartService $cartService, $id, $city): Response
     {
         $cartService->add($id);
-
+        $this->addFlash('info', 'Ajouté en favori');
         return $this->redirectToRoute('activities_redir', ['city' => $city]);
     }
 
@@ -75,8 +76,31 @@ class FrontController extends AbstractController
     public function remove_wish(CartService $cartService, $id, $city): Response
     {
         $cartService->remove($id);
-
+        $this->addFlash('info', 'Retiré des favoris');
         return $this->redirectToRoute('activities_redir', ['city' => $city]);
+    }
+
+    #[Route('/wishList', name: 'wishList')]
+    public function wishList(CartService $cartService): Response
+    {
+        $wishes = $cartService->getCartWithData();
+
+
+        return $this->render('front/wishList.html.twig', [
+            'wishes' => $wishes
+        ]);
+    }
+
+    #[Route('/wishList/detail/{id}', name: 'wishList_detail')]
+    public function wishList_detail(Activity $activity): Response
+    {
+
+
+
+        return $this->render('front/activity_details.html.twig', [
+           'activity'=>$activity,
+            'title'=>'détail de l\'activité'
+        ]);
     }
 
 

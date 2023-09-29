@@ -4,10 +4,14 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Transport\TransportInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -66,6 +70,55 @@ class AdminController extends AbstractController
     {
 
 
+    }
+
+
+    #[Route('/reset/password', name: 'reset_password')]
+    public function reset(Request $request, TransportInterface $mailer, UserRepository $repository): Response
+    {
+
+        if (!empty($_POST)) {
+
+            $email = $request->request->get('email');
+            $user = $repository->findOneBy(['email' => $email]);
+
+            if ($user) {
+               // dd($email);
+
+                $email = (new TemplatedEmail())
+                    ->from('owntrip@coorg.com')
+                    ->to($email)
+                    ->subject('Récupération de mot de passe')
+                    ->htmlTemplate('email/resetPassword.html.twig')
+                    ->context([
+                        'user' => $user
+                    ]);
+                $mailer->send($email);
+                $this->addFlash('success', 'Un mail de réinitialisation viens de vous être transmis');
+
+
+            } else {
+                $this->addFlash('danger', 'Aucun compte à cette adresse mail');
+                return $this->redirectToRoute('reset_password');
+            }
+
+
+        }
+
+
+        return $this->render('admin/forgotPassword.html.twig', [
+
+        ]);
+    }
+
+    #[Route('/password/new/{id}', name: 'new_password')]
+    public function new_password($id): Response
+    {
+
+
+        return $this->render('admin/new_password.html.twig', [
+
+        ]);
     }
 
 
