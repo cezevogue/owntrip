@@ -39,6 +39,13 @@ class ActivityType extends AbstractType
                     'placeholder'=>'Saisissez le prix maximum de l\'activité'
                 ]
             ])
+            ->add('price', NumberType::class,[
+                'required'=>false,
+                'label'=>'Prix',
+                'attr'=>[
+                    'placeholder'=>'Saisissez le prix  de l\'activité'
+                ]
+            ])
             ->add('tel', TextType::class,[
                 'required'=>false,
                 'label'=>'Téléphone',
